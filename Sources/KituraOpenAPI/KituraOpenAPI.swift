@@ -30,7 +30,7 @@ public class KituraOpenAPI {
         addSwaggerUI(to: router, with: config)
     }
 
-    private static func addOpenAPI(to router: Router, with config: KituraOpenAPIConfig) {
+    public static func addOpenAPI(to router: Router, with config: KituraOpenAPIConfig) {
         guard let path = config.apiPath else {
             Log.verbose("No path for OpenAPI definition")
             return
@@ -59,7 +59,7 @@ public class KituraOpenAPI {
         Log.info("Registered OpenAPI definition on \(path)")
     }
 
-    private static func addSwaggerUI(to router: Router, with config: KituraOpenAPIConfig) {
+    public static func addSwaggerUI(to router: Router, with config: KituraOpenAPIConfig) {
         guard let uiPath = config.swaggerUIPath else {
             Log.verbose("No path for SwaggerUI")
             return
