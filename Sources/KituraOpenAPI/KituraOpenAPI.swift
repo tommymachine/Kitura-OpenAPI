@@ -95,7 +95,7 @@ public class KituraOpenAPI {
         do {
             var fileContents = try String(contentsOf: sourceFileURL, encoding: .utf8)
             
-            fileContents = fileContents.replacingOccurrences(of: "{{openapi}}", with: aPath).replacingOccurrences(of: "{{appname}}", with: name)
+            fileContents = fileContents.replacingOccurrences(of: "{{openapi}}", with: aPath).replacingOccurrences(of: "{{apiname}}", with: name)
             
             try fileContents.write(to: destinationFileURL, atomically: true, encoding: .utf8)
         } catch {
