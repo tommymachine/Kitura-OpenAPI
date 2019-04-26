@@ -20,14 +20,14 @@ import Foundation
 
 public class KituraOpenAPI {
     public static var defaultConfig = KituraOpenAPIConfig(apiPath: "/openapi", swaggerUIPath: "/openapi/ui")
-    public static func addEndpoints(to router: Router, with config: KituraOpenAPIConfig = KituraOpenAPI.defaultConfig) {
+    public static func addEndpoints(to router: Router, with config: KituraOpenAPIConfig = KituraOpenAPI.defaultConfig, appName: String) {
         Log.verbose("Registering OpenAPI endpoints")
 
         // Register OpenAPI serving
         addOpenAPI(to: router, with: config)
 
         // Register SwaggerUI serving
-        addSwaggerUI(to: router, with: config)
+        addSwaggerUI(to: router, with: config, name: appName)
     }
 
     public static func addOpenAPI(to router: Router, with config: KituraOpenAPIConfig) {
@@ -59,7 +59,7 @@ public class KituraOpenAPI {
         Log.info("Registered OpenAPI definition on \(path)")
     }
 
-    public static func addSwaggerUI(to router: Router, with config: KituraOpenAPIConfig) {
+    public static func addSwaggerUI(to router: Router, with config: KituraOpenAPIConfig, name: String) {
         guard let uiPath = config.swaggerUIPath else {
             Log.verbose("No path for SwaggerUI")
             return
@@ -95,7 +95,7 @@ public class KituraOpenAPI {
         do {
             var fileContents = try String(contentsOf: sourceFileURL, encoding: .utf8)
             
-            fileContents = fileContents.replacingOccurrences(of: "{{openapi}}", with: aPath)
+            fileContents = fileContents.replacingOccurrences(of: "{{openapi}}", with: aPath).replacingOccurrences(of: "{{appname}}", with: name)
             
             try fileContents.write(to: destinationFileURL, atomically: true, encoding: .utf8)
         } catch {
